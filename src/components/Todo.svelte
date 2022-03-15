@@ -9,7 +9,7 @@
   );
 
   let newTaskName;
-  let newTaskLink;
+  let newTaskLink = "https://";
   let taskInput;
   const addNewTask = () => {
     db.tasks.add({
@@ -20,7 +20,7 @@
       dateAdded: new Date(Date.now()),
     });
     newTaskName = "";
-    newTaskLink = "";
+    newTaskLink = "https://";
     taskInput.focus();
   };
 
@@ -30,11 +30,11 @@
 </script>
 
 <div class="container panel is-dark TodoApp">
-  <p class="panel-heading">Tasks</p>
+  <p class="panel-heading TodoAppTitle">BL:TODO</p>
   <div class="panel-block">
-    <form class="control" on:submit|preventDefault={addNewTask} >
+    <form class="control" on:submit|preventDefault={addNewTask}>
       <input
-        class="input title is-5"
+        class="input title is-5 TodoInput TodoInputText"
         type="text"
         placeholder="New Task"
         bind:value={newTaskName}
@@ -44,7 +44,7 @@
     <form class="control" on:submit|preventDefault={addNewTask}>
       <input
         type="text"
-        class="input title is-5"
+        class="input title is-5 TodoInput TodoInputText"
         placeholder="Task Link"
         bind:value={newTaskLink}
         on:submit={addNewTask}
@@ -53,18 +53,33 @@
   </div>
   <div class="panel-block">
     <p class="control has-icons-left">
-      <input class="input" type="text" placeholder="Search" />
-      <span class="icon is-left">
+      <input
+        class="input TodoInput TodoInputText"
+        type="text"
+        placeholder="Search"
+      />
+      <span class="icon is-left TodoInputText">
         <i class="fas fa-search" aria-hidden="true" />
       </span>
     </p>
   </div>
   {#if $tasksToDo}
     {#each $tasksToDo as task (task.id)}
-      <div class="panel-block" animate:flip in:fade out:fly={{ x: 100 }}>
+      <div
+        class="panel-block TodoItem"
+        animate:flip
+        in:fade
+        out:fly={{ x: 100 }}
+      >
         <input type="checkbox" on:click={() => markTaskDone(task)} />
         <span class="title is-3">
-          <a href={task.link} target="_blank" class="link">[Link]</a>
+          {#if task.link !== "https://"}
+            <a href={task.link} target="_blank" class="link"
+              ><span class="icon is-left TodoInputText"
+                ><i class="fas fa-link" /></span
+              ></a
+            >
+          {/if}
           {task.name}
         </span>
       </div>
@@ -78,5 +93,25 @@
   $panel-tabs-font-size: 2rem;
   .TodoApp {
     width: 100vw;
+    background-color: $grey-light;
+  }
+  .TodoAppTitle {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 2.5rem;
+  }
+  .TodoInput {
+    background-color: $grey-dark;
+    border-color: $primary;
+  }
+  .TodoInputText {
+    color: $primary;
+  }
+  .TodoInputText:focus {
+    color: $primary;
+  }
+  .TodoItem {
+    border: 100px;
+    border-color: $primary;
+    background-color: $grey-light;
   }
 </style>

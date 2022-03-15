@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "dexie": "^3.2.1",
+    "fontawesome-free": "^1.0.4",
     "sirv-cli": "^1.0.0"
   }
 }

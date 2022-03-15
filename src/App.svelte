@@ -15,6 +15,6 @@ import Todo from "./components/Todo.svelte";
     @import "styles.scss";
 
     #mainpanel {
-        background-color: $grey-light;
+        background-color: $grey-dark;
     }
 </style>

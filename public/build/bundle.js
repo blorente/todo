@@ -6018,7 +6018,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (56:2) {#if $tasksToDo}
+    // (60:2) {#if $tasksToDo}
     function create_if_block(ctx) {
     	let each_blocks = [];
     	let each_1_lookup = new Map();
@@ -6092,26 +6092,70 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(56:2) {#if $tasksToDo}",
+    		source: "(60:2) {#if $tasksToDo}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (57:4) {#each $tasksToDo as task (task.id)}
+    // (70:10) {#if task.link !== "https://"}
+    function create_if_block_1(ctx) {
+    	let a;
+    	let span;
+    	let i;
+    	let a_href_value;
+
+    	const block = {
+    		c: function create() {
+    			a = element("a");
+    			span = element("span");
+    			i = element("i");
+    			attr_dev(i, "class", "fas fa-link");
+    			add_location(i, file, 72, 17, 2136);
+    			attr_dev(span, "class", "icon is-left TodoInputText");
+    			add_location(span, file, 71, 15, 2078);
+    			attr_dev(a, "href", a_href_value = /*task*/ ctx[11].link);
+    			attr_dev(a, "target", "_blank");
+    			attr_dev(a, "class", "link");
+    			add_location(a, file, 70, 12, 2014);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, a, anchor);
+    			append_dev(a, span);
+    			append_dev(span, i);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$tasksToDo*/ 8 && a_href_value !== (a_href_value = /*task*/ ctx[11].link)) {
+    				attr_dev(a, "href", a_href_value);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(a);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1.name,
+    		type: "if",
+    		source: "(70:10) {#if task.link !== \\\"https://\\\"}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (61:4) {#each $tasksToDo as task (task.id)}
     function create_each_block(key_1, ctx) {
     	let div;
     	let input;
     	let t0;
     	let span;
-    	let a;
     	let t1;
-    	let a_href_value;
+    	let t2_value = /*task*/ ctx[11].name + "";
     	let t2;
-    	let t3_value = /*task*/ ctx[11].name + "";
     	let t3;
-    	let t4;
     	let div_intro;
     	let div_outro;
     	let rect;
@@ -6124,6 +6168,8 @@ var app = (function () {
     		return /*click_handler*/ ctx[10](/*task*/ ctx[11], ...args);
     	}
 
+    	let if_block = /*task*/ ctx[11].link !== "https://" && create_if_block_1(ctx);
+
     	const block = {
     		key: key_1,
     		first: null,
@@ -6132,21 +6178,16 @@ var app = (function () {
     			input = element("input");
     			t0 = space();
     			span = element("span");
-    			a = element("a");
-    			t1 = text("[Link]");
-    			t2 = space();
-    			t3 = text(t3_value);
-    			t4 = space();
+    			if (if_block) if_block.c();
+    			t1 = space();
+    			t2 = text(t2_value);
+    			t3 = space();
     			attr_dev(input, "type", "checkbox");
-    			add_location(input, file, 58, 8, 1666);
-    			attr_dev(a, "href", a_href_value = /*task*/ ctx[11].link);
-    			attr_dev(a, "target", "_blank");
-    			attr_dev(a, "class", "link");
-    			add_location(a, file, 60, 10, 1772);
+    			add_location(input, file, 67, 8, 1865);
     			attr_dev(span, "class", "title is-3");
-    			add_location(span, file, 59, 8, 1736);
-    			attr_dev(div, "class", "panel-block");
-    			add_location(div, file, 57, 6, 1590);
+    			add_location(span, file, 68, 8, 1935);
+    			attr_dev(div, "class", "panel-block TodoItem");
+    			add_location(div, file, 61, 6, 1741);
     			this.first = div;
     		},
     		m: function mount(target, anchor) {
@@ -6154,11 +6195,10 @@ var app = (function () {
     			append_dev(div, input);
     			append_dev(div, t0);
     			append_dev(div, span);
-    			append_dev(span, a);
-    			append_dev(a, t1);
+    			if (if_block) if_block.m(span, null);
+    			append_dev(span, t1);
     			append_dev(span, t2);
-    			append_dev(span, t3);
-    			append_dev(div, t4);
+    			append_dev(div, t3);
     			current = true;
 
     			if (!mounted) {
@@ -6169,11 +6209,20 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (!current || dirty & /*$tasksToDo*/ 8 && a_href_value !== (a_href_value = /*task*/ ctx[11].link)) {
-    				attr_dev(a, "href", a_href_value);
+    			if (/*task*/ ctx[11].link !== "https://") {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block_1(ctx);
+    					if_block.c();
+    					if_block.m(span, t1);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
     			}
 
-    			if ((!current || dirty & /*$tasksToDo*/ 8) && t3_value !== (t3_value = /*task*/ ctx[11].name + "")) set_data_dev(t3, t3_value);
+    			if ((!current || dirty & /*$tasksToDo*/ 8) && t2_value !== (t2_value = /*task*/ ctx[11].name + "")) set_data_dev(t2, t2_value);
     		},
     		r: function measure() {
     			rect = div.getBoundingClientRect();
@@ -6205,6 +6254,7 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
+    			if (if_block) if_block.d();
     			if (detaching && div_outro) div_outro.end();
     			mounted = false;
     			dispose();
@@ -6215,7 +6265,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(57:4) {#each $tasksToDo as task (task.id)}",
+    		source: "(61:4) {#each $tasksToDo as task (task.id)}",
     		ctx
     	});
 
@@ -6249,7 +6299,7 @@ var app = (function () {
     		c: function create() {
     			div2 = element("div");
     			p0 = element("p");
-    			p0.textContent = "Tasks";
+    			p0.textContent = "BL:TODO";
     			t1 = space();
     			div0 = element("div");
     			form0 = element("form");
@@ -6266,37 +6316,37 @@ var app = (function () {
     			i = element("i");
     			t5 = space();
     			if (if_block) if_block.c();
-    			attr_dev(p0, "class", "panel-heading");
-    			add_location(p0, file, 26, 2, 706);
-    			attr_dev(input0, "class", "input title is-5");
+    			attr_dev(p0, "class", "panel-heading TodoAppTitle");
+    			add_location(p0, file, 26, 2, 727);
+    			attr_dev(input0, "class", "input title is-5 TodoInput TodoInputText");
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "placeholder", "New Task");
-    			add_location(input0, file, 29, 6, 841);
+    			add_location(input0, file, 29, 6, 876);
     			attr_dev(form0, "class", "control");
-    			add_location(form0, file, 28, 4, 773);
+    			add_location(form0, file, 28, 4, 809);
     			attr_dev(input1, "type", "text");
-    			attr_dev(input1, "class", "input title is-5");
+    			attr_dev(input1, "class", "input title is-5 TodoInput TodoInputText");
     			attr_dev(input1, "placeholder", "Task Link");
-    			add_location(input1, file, 38, 6, 1087);
+    			add_location(input1, file, 38, 6, 1146);
     			attr_dev(form1, "class", "control");
-    			add_location(form1, file, 37, 4, 1020);
+    			add_location(form1, file, 37, 4, 1079);
     			attr_dev(div0, "class", "panel-block");
-    			add_location(div0, file, 27, 2, 743);
-    			attr_dev(input2, "class", "input");
+    			add_location(div0, file, 27, 2, 779);
+    			attr_dev(input2, "class", "input TodoInput TodoInputText");
     			attr_dev(input2, "type", "text");
     			attr_dev(input2, "placeholder", "Search");
-    			add_location(input2, file, 49, 6, 1346);
+    			add_location(input2, file, 49, 6, 1429);
     			attr_dev(i, "class", "fas fa-search");
     			attr_dev(i, "aria-hidden", "true");
-    			add_location(i, file, 51, 8, 1445);
-    			attr_dev(span, "class", "icon is-left");
-    			add_location(span, file, 50, 6, 1409);
+    			add_location(i, file, 55, 8, 1596);
+    			attr_dev(span, "class", "icon is-left TodoInputText");
+    			add_location(span, file, 54, 6, 1546);
     			attr_dev(p1, "class", "control has-icons-left");
-    			add_location(p1, file, 48, 4, 1305);
+    			add_location(p1, file, 48, 4, 1388);
     			attr_dev(div1, "class", "panel-block");
-    			add_location(div1, file, 47, 2, 1275);
+    			add_location(div1, file, 47, 2, 1358);
     			attr_dev(div2, "class", "container panel is-dark TodoApp");
-    			add_location(div2, file, 25, 0, 658);
+    			add_location(div2, file, 25, 0, 679);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6406,7 +6456,7 @@ var app = (function () {
     	validate_store(tasksToDo, "tasksToDo");
     	component_subscribe($$self, tasksToDo, value => $$invalidate(3, $tasksToDo = value));
     	let newTaskName;
-    	let newTaskLink;
+    	let newTaskLink = "https://";
     	let taskInput;
 
     	const addNewTask = () => {
@@ -6419,7 +6469,7 @@ var app = (function () {
     		});
 
     		$$invalidate(0, newTaskName = "");
-    		$$invalidate(1, newTaskLink = "");
+    		$$invalidate(1, newTaskLink = "https://");
     		taskInput.focus();
     	};
 
