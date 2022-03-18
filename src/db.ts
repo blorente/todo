@@ -8,6 +8,7 @@ export interface Task {
   status: TaskStatus;
   link: string;
   dateAdded: Date;
+  category: string;
 }
 
 export class TasksDexie extends Dexie {
